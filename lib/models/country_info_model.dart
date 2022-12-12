@@ -16,11 +16,11 @@ class CountryInfoModel {
   });
 
   factory CountryInfoModel.fromJson(Map<String, dynamic> json) {
-    double isDouble(json) {
-      if (json is int) {
-        return json.toDouble();
+    double isDouble(value) {
+      if (value is int) {
+        return value.toDouble();
       } else {
-        return json;
+        return value;
       }
     }
 

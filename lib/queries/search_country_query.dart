@@ -1,14 +1,14 @@
-String allCountryQuery = r'''
-query countries ($sortBy: CountryResultParametersSortInput){
-    countries (sortBy: $sortBy){
-        country 
+const String searchCountryQuery = r'''
+query country ($country: String!, $filterBy: CountryResultParametersFilterInput){
+    country(name: $country, filterBy: $filterBy) {
+        country
         countryInfo {
             _id
             lat
             long
             flag
+            iso2
             iso3
-            iso2 
         }
         continent
         result {
@@ -31,4 +31,5 @@ query countries ($sortBy: CountryResultParametersSortInput){
         }
     }
 }
+
 ''';

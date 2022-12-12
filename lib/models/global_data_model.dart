@@ -1,5 +1,5 @@
-class ResultModel {
-  final int population;
+class GlobalDataModel {
+  final int affectedCountries;
   final int tests;
   final int cases;
   final int todayCases;
@@ -14,10 +14,10 @@ class ResultModel {
   final double activePerOneMillion;
   final double recoveredPerOneMillion;
   final double criticalPerOneMillion;
-  final String updated;
+  final int population;
 
-  ResultModel({
-    required this.population,
+  GlobalDataModel({
+    required this.affectedCountries,
     required this.tests,
     required this.cases,
     required this.todayCases,
@@ -32,10 +32,10 @@ class ResultModel {
     required this.activePerOneMillion,
     required this.recoveredPerOneMillion,
     required this.criticalPerOneMillion,
-    required this.updated,
+    required this.population,
   });
 
-  factory ResultModel.fromJson(Map<String, dynamic> json) {
+  factory GlobalDataModel.fromJson(Map<String, dynamic> json) {
     double isDouble(value) {
       if (value is int) {
         return value.toDouble();
@@ -44,15 +44,17 @@ class ResultModel {
       }
     }
 
-    return ResultModel(
-      population: json['population'],
+    json = json['globalTotal'];
+
+    return GlobalDataModel(
+      affectedCountries: json['affectedCountries'],
       tests: json['tests'],
       cases: json['cases'],
       todayCases: json['todayCases'],
       deaths: json['deaths'],
       todayDeaths: json['todayDeaths'],
       recovered: json['recovered'],
-      active: json['active'],
+      active: json['recovered'],
       critical: json['critical'],
       casesPerOneMillion: isDouble(json['casesPerOneMillion']),
       deathsPerOneMillion: isDouble(json['deathsPerOneMillion']),
@@ -60,7 +62,7 @@ class ResultModel {
       activePerOneMillion: isDouble(json['activePerOneMillion']),
       recoveredPerOneMillion: isDouble(json['recoveredPerOneMillion']),
       criticalPerOneMillion: isDouble(json['criticalPerOneMillion']),
-      updated: json['updated'],
+      population: json['population'],
     );
   }
 }

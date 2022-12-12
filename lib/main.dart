@@ -1,63 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:sayakaya_test/queries/all_country_query.dart';
-import 'package:sayakaya_test/services/country_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:sayakaya_test/bloc/country_detail/country_detail_cubit.dart';
+import 'package:sayakaya_test/bloc/covid/covid_bloc.dart';
+import 'package:sayakaya_test/bloc/navigation/navigation_cubit.dart';
+import 'package:sayakaya_test/const/colors.dart';
+import 'package:sayakaya_test/const/router.dart';
+import 'package:sayakaya_test/screens/country_detail_screen.dart';
+import 'package:sayakaya_test/screens/homepage_screen.dart';
 
 void main() {
-  final HttpLink httpLink = HttpLink("https://covid19-graphql.netlify.app/");
-
-  ValueNotifier<GraphQLClient> client = ValueNotifier(
-    GraphQLClient(
-      link: httpLink,
-      cache: GraphQLCache(
-        store: InMemoryStore(),
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<CovidBloc>(
+          create: (context) => CovidBloc(),
+        ),
+        BlocProvider<NavigationCubit>(
+          create: (context) => NavigationCubit(),
+        ),
+        BlocProvider<CountryDetailCubit>(
+          create: (context) => CountryDetailCubit(),
+        ),
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ThemeData().colorScheme.copyWith(
+                secondary: kWhiteColor,
+                primary: kWhiteColor,
+              ),
+        ),
+        getPages: [
+          GetPage(
+            name: countryDetailRoute,
+            page: () => const CountryDetailScreen(),
+          ),
+        ],
+        home: const MaterialApp(
+          title: 'Covid Tracker',
+          debugShowCheckedModeBanner: false,
+          home: HomepageScreen(),
+        ),
       ),
     ),
   );
-
-  var app = GraphQLProvider(
-    client: client,
-    child: const MyApp(),
-  );
-
-  runApp(app);
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: SingleChildScrollView(
-          child: FutureBuilder(
-            future: CovidService().performQuery(
-              query: allCountryQuery,
-              variables: {},
-            ),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-
-                case ConnectionState.waiting:
-
-                case ConnectionState.active:
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-
-                case ConnectionState.done:
-                  return Text(snapshot.data.toString());
-              }
-            },
-          ),
-        ),
-      ),
-    );
-  }
 }
