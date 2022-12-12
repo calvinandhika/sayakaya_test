@@ -1,16 +1,17 @@
 # sayakaya_test
 
-A new Flutter project.
+Cukup clone lalu flutter pub get untuk bisa menjalankan applikasi-nya
 
-## Getting Started
+## Technology dan package yang digunakan
+1. State Management menggunakan BLOC
+2. Routing menggunakan GETX
+3. Charting menggunakan FL_CHART
+4. Graphql request menggunakan graphql_flutter
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Fitur yang terdapat dalam applikasi
+1. Homepage akan menampilkan data terbaru dunia kasus covid terbaru
+2. list country akan menampilkan keseluruhan negara yang ada beserta rangkuman singkat jumlah kasus barunya
+3. ketika memilih salah satu negara maka akan terdapat chart untuk hari ini, kemarin, dan kemarin lusa untuk kasus covid terbaru dinegara tersebut
+4. di bawah dari chart terdapat data lengkap 3 hari kasus COVID. mulai dari jumlah test, kematian, kasus baru, dll.
+5. error handling saat terjadi limitasi dengan server, sumber API nya sangat terbatas dalam jumlah akses, sehingga sering sekali mendapatkan error dan data tidak muncul sehingga harus dihandle errornya dan memunculkan pop up
+6. melakukan sorting dari tertinggi ke terendah berdasarkan beberapa category, misalnya, jumlah case baru, jumlah kematian tertinggi, jumlah test tertinggi dan lainnya
