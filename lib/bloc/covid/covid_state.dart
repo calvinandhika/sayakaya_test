@@ -15,12 +15,14 @@ class CovidStateData extends CovidState {
   final CountryModelData? countrySpotlight;
   final GlobalDataModel? globalData;
   final String? sortBy;
+  final String? exception;
 
   const CovidStateData({
     this.countriesData,
     this.countrySpotlight,
     this.globalData,
     this.sortBy,
+    this.exception,
     required bool isLoading,
   }) : super(isLoading: isLoading);
 

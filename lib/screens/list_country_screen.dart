@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sayakaya_test/bloc/covid/covid_bloc.dart';
 import 'package:sayakaya_test/const/colors.dart';
 import 'package:sayakaya_test/const/enum.dart';
+import 'package:sayakaya_test/dialog/error_dialog.dart';
 import 'package:sayakaya_test/widgets/country_card.dart';
 import 'package:sayakaya_test/widgets/custom_app_bar.dart';
 import 'package:sayakaya_test/widgets/custom_bottom_navigation_bar.dart';
@@ -28,13 +30,33 @@ class _ListCountryScreenState extends State<ListCountryScreen> {
         },
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-          child: BlocBuilder<CovidBloc, CovidState>(
+          child: BlocConsumer<CovidBloc, CovidState>(
+            listener: (context, state) {
+              if (state is CovidStateData) {
+                if (state.exception != null) {
+                  showErrorDialog(
+                    title: 'Server Busy',
+                    body: 'Please wait a couple of second and try again',
+                    context: context,
+                  );
+                }
+              }
+            },
             builder: (context, state) {
               if (state is CovidStateData) {
-                if (!state.isLoading) {
+                if (state.exception != null) {
+                  return Center(
+                    child: Text(
+                      'Try Again',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        color: kWhiteColor,
+                      ),
+                    ),
+                  );
+                } else if (!state.isLoading) {
                   return Column(
                     children: [
-                      CustomSearchField(),
                       const SizedBox(
                         height: 10,
                       ),
@@ -87,6 +109,16 @@ class _ListCountryScreenState extends State<ListCountryScreen> {
                         ),
                       ),
                     ],
+                  );
+                } else if (state.exception != null) {
+                  return Center(
+                    child: Text(
+                      'Try Again',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        color: kWhiteColor,
+                      ),
+                    ),
                   );
                 } else {
                   return const Center(

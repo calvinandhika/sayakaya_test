@@ -25,12 +25,6 @@ void main() {
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ThemeData().colorScheme.copyWith(
-                secondary: kWhiteColor,
-                primary: kWhiteColor,
-              ),
-        ),
         getPages: [
           GetPage(
             name: countryDetailRoute,

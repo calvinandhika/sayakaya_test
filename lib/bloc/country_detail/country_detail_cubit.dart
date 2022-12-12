@@ -46,7 +46,12 @@ class CountryDetailCubit extends Cubit<CountryDetailState> {
         ),
       );
     } catch (e) {
-      rethrow;
+      emit(
+        CountryDetailStateData(
+          isLoading: false,
+          exception: e.toString(),
+        ),
+      );
     }
   }
 }

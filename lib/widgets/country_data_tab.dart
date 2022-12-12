@@ -69,7 +69,7 @@ class _CountryDataTabState extends State<CountryDataTab> {
                 height: 5,
               ),
               Text(
-                'Covid Result',
+                'Covid Cases',
                 style: GoogleFonts.poppins(
                   fontSize: 22,
                   color: kWhiteColor,

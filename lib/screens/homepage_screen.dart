@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:sayakaya_test/bloc/covid/covid_bloc.dart';
 import 'package:sayakaya_test/const/colors.dart';
+import 'package:sayakaya_test/dialog/error_dialog.dart';
 import 'package:sayakaya_test/models/global_data_model.dart';
 import 'package:sayakaya_test/widgets/custom_app_bar.dart';
 import 'package:sayakaya_test/widgets/custom_bottom_navigation_bar.dart';
@@ -34,10 +35,31 @@ class _HomepageScreenState extends State<HomepageScreen> {
       bottomNavigationBar: const CustomBottomNavigationBar(),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-        child: BlocBuilder<CovidBloc, CovidState>(
+        child: BlocConsumer<CovidBloc, CovidState>(
+          listener: (context, state) {
+            if (state is CovidStateData) {
+              if (state.exception != null) {
+                showErrorDialog(
+                  title: 'Server Busy',
+                  body: 'Please wait a couple of second and try again',
+                  context: context,
+                );
+              }
+            }
+          },
           builder: (context, state) {
             if (state is CovidStateData) {
-              if (!state.isLoading) {
+              if (state.exception != null) {
+                return Center(
+                  child: Text(
+                    'Try Again',
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      color: kWhiteColor,
+                    ),
+                  ),
+                );
+              } else if (!state.isLoading) {
                 return Card(
                   color: kDarkGreyColor,
                   elevation: 0,

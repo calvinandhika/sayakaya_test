@@ -14,12 +14,14 @@ class CountryDetailStateData extends CountryDetailState {
   final CountryModelData? todayData;
   final CountryModelData? yesterdayData;
   final CountryModelData? twoDaysAgoData;
+  final String? exception;
 
   const CountryDetailStateData({
     required this.isLoading,
     this.todayData,
     this.yesterdayData,
     this.twoDaysAgoData,
+    this.exception,
   });
 
   @override
@@ -28,5 +30,6 @@ class CountryDetailStateData extends CountryDetailState {
         todayData,
         yesterdayData,
         twoDaysAgoData,
+        exception,
       ];
 }

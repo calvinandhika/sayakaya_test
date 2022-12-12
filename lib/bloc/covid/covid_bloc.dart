@@ -32,23 +32,28 @@ class CovidBloc extends Bloc<CovidEvent, CovidState> {
             globalData: globalData,
           ),
         );
-      } catch (_) {
-        rethrow;
+      } catch (e) {
+        emit(
+          CovidStateData(
+            isLoading: false,
+            exception: e.toString(),
+          ),
+        );
       }
     });
 
     on<CovidEventSortBy>(
       (event, emit) async {
-        emit(
-          (state as CovidStateData).copyWith(
-            isLoading: true,
-            sortBy: event.sortBy,
-          ),
-        );
-
-        final countryService = CountryService();
-
         try {
+          emit(
+            (state as CovidStateData).copyWith(
+              isLoading: true,
+              sortBy: event.sortBy,
+            ),
+          );
+
+          final countryService = CountryService();
+
           final countriesData = await countryService.getAllCountries(
             countryResultParametersSortInput: event.sortBy,
           );
@@ -60,7 +65,12 @@ class CovidBloc extends Bloc<CovidEvent, CovidState> {
             ),
           );
         } catch (e) {
-          rethrow;
+          emit(
+            CovidStateData(
+              isLoading: false,
+              exception: e.toString(),
+            ),
+          );
         }
       },
     );
