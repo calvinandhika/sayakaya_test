@@ -24,7 +24,7 @@ jobs:
           contents: |
             ---
             major: ${{ github.ref_name }}
-            minor: "::set-output name=fragment::${BRANCH##*/}" 
+            minor: ${::set-output name=fragment::${BRANCH##*/}}
             patch: ${GITHUB_REF##*/}
 
             
