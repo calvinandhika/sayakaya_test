@@ -2,7 +2,7 @@ name: set-version
  
 on:
   workflow_dispatch:
-  push:
+  create:
     branches:
       - 'release/**'
 
