@@ -21,9 +21,10 @@ jobs:
           write-mode: overwrite
           contents: |
             ---
-            major: 2
-            minor: 4
-            patch: 5
+            major: ${{ github.ref_name }}
+            minor: ${{ github.ref_name }}
+            patch: ${{ github.base_ref || github.ref_name }}
+            
 
             
       - name: Commit & Push
@@ -32,5 +33,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
           force: true
-          message: 'Overwritten by Github Actions - ${date}'
+          message: 'Set version to -'
 
