@@ -30,7 +30,7 @@ jobs:
           contents: |
             ---
             major: ${{ steps.split.outputs.fragment[0] }}
-            minor: ${{ steps.split.outputs.fragment[1] }}
+            minor: ${ github.ref_name##*/ }
             patch: ${{ steps.split.outputs.fragment }}
 
             
