@@ -1,4 +1,4 @@
 ---
-major: feature/3.1.0
-minor: ${::set-output name=fragment::${BRANCH##*/}}
+major: 
+minor: 
 patch: 3.1.0
