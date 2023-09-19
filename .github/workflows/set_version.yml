@@ -25,7 +25,7 @@ jobs:
             ---
             major: ${{ github.ref_name }}
             minor: ${::set-output name=fragment::${BRANCH##*/}}
-            patch: ${GITHUB_REF##*/}
+            patch: ${{ steps.split.outputs.fragment }}
 
             
       - name: Commit & Push
