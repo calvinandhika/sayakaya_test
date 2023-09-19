@@ -23,7 +23,7 @@ jobs:
       - uses: jungwinter/split@master
         id: branch
         with:
-          msg: ${{ github.ref_name }}
+          msg: ${{ steps.split.outputs.fragment  }}
           separator: "."
           maxsplit: -1
 
@@ -36,7 +36,7 @@ jobs:
           write-mode: overwrite
           contents: |
             ---
-            major: ${{ github.ref_name }}
+            major: ${{ steps.branch.outputs._0 }}
             minor: ${{ steps.branch.outputs._1 }}
             patch: ${{ steps.split.outputs.fragment }}
 
