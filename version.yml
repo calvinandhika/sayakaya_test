@@ -1,4 +1,4 @@
 ---
 major: feature/3.1.0
-minor: ${GITHUB_REF##*/}
+minor: "::set-output name=fragment::${BRANCH##*/}" 
 patch: ${GITHUB_REF##*/}
