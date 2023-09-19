@@ -22,8 +22,8 @@ jobs:
           contents: |
             ---
             major: ${{ github.ref_name }}
-            minor: ${{ github.ref_name#refs/head/ }}
-            patch: ${{ github.ref_name#refs/release/ }}
+            minor: ${GITHUB_REF##*/}
+            patch: ${GITHUB_REF##*/}
 
             
       - name: Commit & Push
