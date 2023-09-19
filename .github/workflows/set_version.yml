@@ -33,5 +33,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
           force: true
-          message: 'Set version to -'
+          message: '[skip ci] Set version to -'
 
