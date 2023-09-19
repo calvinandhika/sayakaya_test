@@ -20,6 +20,13 @@ jobs:
         id: split
         run: echo "::set-output name=fragment::${BRANCH##*/}"
 
+      - uses: jungwinter/split@master
+        id: branch
+        with:
+          msg: ${{ github.ref_name }}
+          separator: "."
+          maxsplit: -1
+
       - name: Overwrite file
         env:
             BRANCH: ${{ github.ref_name }}
@@ -30,7 +37,7 @@ jobs:
           contents: |
             ---
             major: ${{ github.ref_name }}
-            minor: ${ github.ref_name##*/ }
+            minor: ${{ steps.branch.outputs._1 }}
             patch: ${{ steps.split.outputs.fragment }}
 
             
