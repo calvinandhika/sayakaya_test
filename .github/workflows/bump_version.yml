@@ -1,0 +1,29 @@
+name: build-staging
+ 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'staging'
+
+jobs:
+  # Android
+  build_android_staging:
+    runs-on: ubuntu-latest
+    steps:
+      # Preparation
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.0.1'
+          channel: 'stable'
+          cache: true
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+          working-directory: android
+
+      # Build
+      - run: bundle exec fastlane distribute_staging
+        working-directory: android
