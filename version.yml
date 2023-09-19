@@ -1,4 +1,4 @@
 ---
 major: 
-minor: 
+minor: ${ github.ref_name##*/ }
 patch: 3.1.0
