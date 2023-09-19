@@ -24,6 +24,17 @@ jobs:
           bundler-cache: true
           working-directory: android
 
-      # Build
-      - run: Write-Output $server.name | Out-File '(Your Path)\Servers.txt' -Append
-        working-directory: android
+      - name: Overwrite file
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: path/to/file.js
+          write-mode: overwrite
+          contents: |
+            console.log('some contents')
+            
+      - name: Commit & Push
+        uses: Andro999b/push@v1.3
+        with:
+          force: true
+          message: 'Overwritten by Github Actions - ${date}'
+
