@@ -38,7 +38,7 @@ jobs:
             ---
             major: ${{ steps.branch.outputs._0 }}
             minor: ${{ steps.branch.outputs._1 }}
-            patch: ${{ steps.split.outputs.fragment }}
+            patch: ${{ steps.branch.outputs._2 }}
 
             
       - name: Commit & Push
