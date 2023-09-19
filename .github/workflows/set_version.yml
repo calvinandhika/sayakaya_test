@@ -14,6 +14,12 @@ jobs:
       # Preparation
       - uses: actions/checkout@v3
 
+      - name: Split branch name
+        env:
+          BRANCH: ${{ github.ref_name }}
+        id: split
+        run: echo "::set-output name=fragment::${BRANCH##*/}"
+
       - name: Overwrite file
         env:
             BRANCH: ${{ github.ref_name }}
