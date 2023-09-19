@@ -8,22 +8,23 @@ on:
 
 jobs:
   # Android
-  build_android_staging:
+  set_version:
     runs-on: ubuntu-latest
     steps:
       # Preparation
       - uses: actions/checkout@v3
 
-      - name: Split branch name
+      - name: Get version from branch name
         env:
           BRANCH: ${{ github.ref_name }}
         id: split
         run: echo "::set-output name=fragment::${BRANCH##*/}"
 
-      - uses: jungwinter/split@master
+      - name: Split version
+        uses: jungwinter/split@master
         id: branch
         with:
-          msg: ${{ steps.split.outputs.fragment  }}
+          msg: ${{ steps.split.outputs.fragment }}
           separator: "."
           maxsplit: -1
 
@@ -47,5 +48,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref_name }}
           force: true
-          message: 'Set version to -'
+          message: 'Set version to - ${{ steps.split.outputs.fragment }}'
 
