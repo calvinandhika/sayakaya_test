@@ -1,5 +1,5 @@
 name: set-version
- 
+
 on:
   workflow_dispatch:
   create:
@@ -25,13 +25,13 @@ jobs:
         id: branch
         with:
           msg: ${{ steps.split.outputs.fragment }}
-          separator: "."
+          separator: '.'
           maxsplit: -1
 
       - name: Overwrite file
         env:
-            BRANCH: ${{ github.ref_name }}
-        uses: "DamianReeves/write-file-action@master"
+          BRANCH: ${{ github.ref_name }}
+        uses: 'DamianReeves/write-file-action@master'
         with:
           path: version.yml
           write-mode: overwrite
@@ -41,7 +41,10 @@ jobs:
             minor: ${{ steps.branch.outputs._1 }}
             patch: ${{ steps.branch.outputs._2 }}
 
-            
+      - name: Set version on Pubspec
+        run: bundle exec fastlane bump_build_number
+        working-directory: ios
+
       - name: Commit & Push
         uses: Andro999b/push@v1.3
         with:
@@ -49,4 +52,3 @@ jobs:
           branch: ${{ github.ref_name }}
           force: true
           message: 'Set version to - ${{ steps.split.outputs.fragment }}'
-
