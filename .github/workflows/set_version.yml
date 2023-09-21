@@ -9,7 +9,7 @@ on:
 jobs:
   # Android
   set_version:
-    runs-on: macos-latest
+    runs-on: linux-latest
     steps:
       # Preparation
       - uses: actions/checkout@v3
