@@ -57,7 +57,7 @@ jobs:
         id: buildNumber
         working-directory: ios
         run: |
-          code = $(bundle exec fastlane get_pubspec_build_number)
+          code=$(bundle exec fastlane get_pubspec_build_number)
           echo "::set-output name=code::$code"
 
       - name: Commit & Push
