@@ -59,7 +59,7 @@ jobs:
         run: |
           output=$(bundle exec fastlane get_pubspec_build_number)
           echo "Original output: $output"
-          numbers=$(echo "$output" | grep -oE '[0-9]\{8,\}')
+          numbers=$(echo "$output" | grep -o '[0-9]\{8,\}')
           echo "Extracted build number: $numbers"
           echo "::set-output name=code::$numbers"
 
