@@ -57,8 +57,14 @@ jobs:
         id: buildNumber
         working-directory: ios
         run: |
-          result=$(bundle exec fastlane get_pubspec_build_number | awk '/[0-9]+/ {print $1}')
-          echo "::set-output name=code::$result"
+          output=$(bundle exec fastlane get_pubspec_build_number)
+          echo "Original output: $output"
+          numbers=$(echo "$output" | grep -oE '[0-9]\{8,\}')
+          echo "Found numbers: $numbers"
+          build_number=$(echo "$numbers" | tail -n 1)
+          echo "Extracted build number: $build_number"
+          echo "::set-output name=code::$build_number"
+          echo "::set-output name=code::$build_number"
 
       - name: Commit & Push
         uses: github-actions-x/commit@v2.9
