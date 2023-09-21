@@ -51,9 +51,11 @@ jobs:
         working-directory: ios
 
       - name: Commit & Push
-        uses: Andro999b/push@v1.3
+        uses: github-actions-x/commit@v2.9
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref_name }}
-          force: true
-          message: 'Set version to - ${{ steps.split.outputs.fragment }}'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          push-branch: '${{ github.ref_name }}'
+          commit-message: 'Set version to - ${{ steps.split.outputs.fragment }}'
+          force-add: 'true'
+          files: pubspec.yaml version.yml
+          name: GitHub Action
