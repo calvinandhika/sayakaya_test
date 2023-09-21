@@ -1,37 +1,61 @@
 name: set-version
- 
+
 on:
   workflow_dispatch:
-  push:
+  create:
     branches:
       - 'release/**'
 
 jobs:
   # Android
-  build_android_staging:
+  set_version:
     runs-on: ubuntu-latest
     steps:
       # Preparation
       - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+          working-directory: ios
+
+      - name: Get version from branch name
+        env:
+          BRANCH: ${{ github.ref_name }}
+        id: split
+        run: echo "::set-output name=fragment::${BRANCH##*/}"
+
+      - name: Split version
+        uses: jungwinter/split@master
+        id: branch
+        with:
+          msg: ${{ steps.split.outputs.fragment }}
+          separator: '.'
+          maxsplit: -1
 
       - name: Overwrite file
-        uses: "DamianReeves/write-file-action@master"
+        env:
+          BRANCH: ${{ github.ref_name }}
+        uses: 'DamianReeves/write-file-action@master'
         with:
           path: version.yml
           write-mode: overwrite
           contents: |
             ---
-            major: ${{ github.ref_name }}
-            minor: ${{ github.ref_name }}
-            patch: ${{ github.base_ref || github.ref_name }}
-            
+            major: ${{ steps.branch.outputs._0 }}
+            minor: ${{ steps.branch.outputs._1 }}
+            patch: ${{ steps.branch.outputs._2 }}
 
-            
+      - name: Set version on Pubspec
+        run: bundle exec fastlane apply_new_version
+        working-directory: ios
+
       - name: Commit & Push
-        uses: Andro999b/push@v1.3
+        uses: github-actions-x/commit@v2.9
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          force: true
-          message: '[skip ci] Set version to -'
-
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          push-branch: '${{ github.ref_name }}'
+          commit-message: 'Set version to - ${{ steps.split.outputs.fragment }}'
+          force-add: 'true'
+          files: pubspec.yaml version.yml
+          name: GitHub Action
