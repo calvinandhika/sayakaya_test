@@ -38,6 +38,15 @@ platform :ios do
       yml: "../version.yml",
       pubspec: "../pubspec.yaml")
   end
+
+  desc "Get build version name"
+  lane :get_pubspec_version_name do
+    flutter_version_manager(
+      arguments: "-version",
+      git_repo: "..",
+      yml: "../version.yml",
+      pubspec: "../pubspec.yaml")
+  end
 end
 
 

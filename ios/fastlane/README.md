@@ -39,6 +39,14 @@ Applies the latest version
 
 Get build number
 
+### ios get_pubspec_version_name
+
+```sh
+[bundle exec] fastlane ios get_pubspec_version_name
+```
+
+Get build version name
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
