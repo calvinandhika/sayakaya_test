@@ -29,6 +29,15 @@ platform :ios do
       yml: "../version.yml",
       pubspec: "../pubspec.yaml")
   end
+
+  desc "Get build number"
+  lane :get_pubspec_build_number do
+    flutter_version_manager(
+      arguments: "-code",
+      git_repo: "..",
+      yml: "../version.yml",
+      pubspec: "../pubspec.yaml")
+  end
 end
 
 
