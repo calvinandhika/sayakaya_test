@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   create:
     branches:
-      - 'release/**'
+      - 'release/*'
 
 jobs:
   # Android
