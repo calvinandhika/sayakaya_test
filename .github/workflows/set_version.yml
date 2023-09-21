@@ -47,7 +47,7 @@ jobs:
             patch: ${{ steps.branch.outputs._2 }}
 
       - name: Set version on Pubspec
-        run: bundle exec fastlane bump_build_number
+        run: bundle exec fastlane apply_new_version
         working-directory: ios
 
       - name: Commit & Push
