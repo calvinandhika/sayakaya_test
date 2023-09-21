@@ -58,11 +58,7 @@ jobs:
         working-directory: ios
         run: |
           output=$(bundle exec fastlane get_pubspec_build_number)
-          echo "Original output: $output"
-          numbers=$(echo "$output" | grep -oE '[0-9]+')
-          echo "Found numbers: $numbers"
-          build_number=$(echo "$numbers" | tail -n 1)
-          echo "Extracted build number: $build_number"
+          build_number=$(echo "$output" | grep -oE 'flutter_version_manager\s+([0-9]+)' | awk '{print $2}')
           echo "::set-output name=code::$build_number"
 
       - name: Commit & Push
