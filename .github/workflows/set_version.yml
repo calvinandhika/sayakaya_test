@@ -58,8 +58,8 @@ jobs:
         working-directory: ios
         run: |
           output=$(bundle exec fastlane get_pubspec_build_number)
-          code=$(echo "$output" | grep -oE '[0-9]+')
-          echo "::set-output name=code::$code"
+          build_number=$(echo "$output" | grep -oE 'flutter_version_manager\s+([0-9]+)' | awk '{print $2}')
+          echo "::set-output name=code::$build_number"
 
       - name: Commit & Push
         uses: github-actions-x/commit@v2.9
