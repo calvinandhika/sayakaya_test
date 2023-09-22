@@ -32,7 +32,8 @@ jobs:
         id: branch
         with:
           text: ${{ steps.split.outputs.version }}
-          regex: \.
+          regex: '\.'
+          flags: gm
 
       - name: Overwrite file
         env:
