@@ -7,7 +7,6 @@ on:
       - 'release/*'
 
 jobs:
-  # Android
   set_version:
     runs-on: macos-latest
     outputs:
@@ -15,7 +14,6 @@ jobs:
       version: ${{ steps.split.outputs.version }}
 
     steps:
-      # Preparation
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
@@ -30,7 +28,7 @@ jobs:
         run: echo "version=${BRANCH##*/}" >> $GITHUB_OUTPUT
 
       - name: Split version
-        uses: jungwinter/split@master
+        uses: winterjung/split@v2
         id: branch
         with:
           msg: ${{ steps.split.outputs.version }}
