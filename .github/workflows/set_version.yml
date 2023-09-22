@@ -65,14 +65,14 @@ jobs:
           echo "::set-output name=code::$numbers"
 
       - name: Bump ios build number
-        run: bundle exec fastlane bump_build_number build_number:${{ needs.set_version.outputs.output1 }}
+        run: bundle exec fastlane bump_build_number build_number:${{ jobs.set_version.outputs.output1 }}
 
       - name: Commit & Push
         uses: github-actions-x/commit@v2.9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           push-branch: '${{ github.ref_name }}'
-          commit-message: 'Set version to - ${{ needs.set_version.outputs.output2 }}'
+          commit-message: 'Set version to - ${{ jobs.set_version.outputs.output2 }}'
           force-add: 'true'
           files: pubspec.yaml version.yml
           name: GitHub Action
