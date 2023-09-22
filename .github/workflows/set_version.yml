@@ -66,6 +66,7 @@ jobs:
 
       - name: Bump ios build number
         run: bundle exec fastlane bump_build_number build_number:${{ steps.buildNumber.outputs.code }}
+        working-directory: ios
 
       - name: Commit & Push
         uses: github-actions-x/commit@v2.9
