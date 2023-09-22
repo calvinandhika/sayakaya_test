@@ -75,5 +75,5 @@ jobs:
           push-branch: '${{ github.ref_name }}'
           commit-message: 'Set version to - ${{ steps.split.outputs.version }}'
           force-add: 'true'
-          files: pubspec.yaml version.yml
+          files: pubspec.yaml version.yml ios/info.plist ios/project.pbxproj
           name: GitHub Action
