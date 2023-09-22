@@ -11,8 +11,8 @@ jobs:
   set_version:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.buildNumber.outputs.code }}
-      output2: ${{ steps.split.outputs.version }}
+      code: ${{ steps.buildNumber.outputs.code }}
+      version: ${{ steps.split.outputs.version }}
 
     steps:
       # Preparation
@@ -65,14 +65,14 @@ jobs:
           echo "::set-output name=code::$numbers"
 
       - name: Bump ios build number
-        run: bundle exec fastlane bump_build_number build_number:${{ set_version.outputs.output1 }}
+        run: bundle exec fastlane bump_build_number build_number:${{ code }}
 
       - name: Commit & Push
         uses: github-actions-x/commit@v2.9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           push-branch: '${{ github.ref_name }}'
-          commit-message: 'Set version to - ${{ set_version.outputs.output2 }}'
+          commit-message: 'Set version to - ${{ version }}'
           force-add: 'true'
           files: pubspec.yaml version.yml
           name: GitHub Action
