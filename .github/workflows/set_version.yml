@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.buildNumber.outputs.code }}
+      output2: ${{ steps.split.outputs.version }}
 
     steps:
       # Preparation
@@ -26,13 +27,13 @@ jobs:
         env:
           BRANCH: ${{ github.ref_name }}
         id: split
-        run: echo "::set-output name=fragment::${BRANCH##*/}"
+        run: echo "::set-output name=version::${BRANCH##*/}"
 
       - name: Split version
         uses: jungwinter/split@master
         id: branch
         with:
-          msg: ${{ steps.split.outputs.fragment }}
+          msg: ${{ steps.split.outputs.version }}
           separator: '.'
           maxsplit: -1
 
@@ -63,18 +64,18 @@ jobs:
           echo "Extracted build number: $numbers"
           echo "::set-output name=code::$numbers"
 
+  commit:
+    runs-on: ubuntu-latest
+    needs: set_version
+    steps:
+      - run: bundle exec fastlane bump_build_number build_number:${{ needs.set_version.outputs.output1 }}
+
       - name: Commit & Push
         uses: github-actions-x/commit@v2.9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           push-branch: '${{ github.ref_name }}'
-          commit-message: 'Set version to - ${{ steps.split.outputs.fragment }}'
+          commit-message: 'Set version to - ${{ needs.set_version.outputs.output2 }}'
           force-add: 'true'
           files: pubspec.yaml version.yml
           name: GitHub Action
-
-  job2:
-    runs-on: ubuntu-latest
-    needs: set_version
-    steps:
-      - run: echo ${{ needs.set_version.outputs.output1 }}
