@@ -73,6 +73,5 @@ jobs:
           commit_message: Set version to - ${{ steps.split.outputs.version }}
           target_branch: ${{ github.ref_name }}
           files: pubspec.yaml version.yml ios/info.plist ios/project.pbxproj
-          remote_repository: https://github.com/owner/another_repository
           access_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
