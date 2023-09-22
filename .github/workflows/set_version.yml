@@ -27,7 +27,7 @@ jobs:
         env:
           BRANCH: ${{ github.ref_name }}
         id: split
-        run: echo "::set-output name=version::${BRANCH##*/}"
+        run: echo "version=${BRANCH##*/}" >> $GITHUB_OUTPUT
 
       - name: Split version
         uses: jungwinter/split@master
@@ -62,7 +62,7 @@ jobs:
           echo "Original output: $output"
           numbers=$(echo "$output" | grep -o '[0-9]\{8,\}')
           echo "Extracted build number: $numbers"
-          echo "::set-output name=code::$numbers"
+          echo "code=$numbers" >> $GITHUB_OUTPUT
 
       - name: Bump ios build number
         run: bundle exec fastlane bump_build_number build_number:${{ steps.buildNumber.outputs.code }}
