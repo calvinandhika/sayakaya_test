@@ -43,9 +43,9 @@ jobs:
           write-mode: overwrite
           contents: |
             ---
-            major: ${{ steps.branch.outputs._0 }}
-            minor: ${{ steps.branch.outputs._1 }}
-            patch: ${{ steps.branch.outputs._2 }}
+            major: ${{ steps.branch.outputs._group1 }}
+            minor: ${{ steps.branch.outputs._group2 }}
+            patch: ${{ steps.branch.outputs._group3 }}
 
       - name: Set version on Pubspec
         run: bundle exec fastlane apply_new_version
@@ -66,11 +66,13 @@ jobs:
         working-directory: ios
 
       - name: Commit & Push
-        uses: github-actions-x/commit@v2.9
+        uses: GuillaumeFalourd/git-commit-push@v1.3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          push-branch: '${{ github.ref_name }}'
-          commit-message: 'Set version to - ${{ steps.split.outputs.version }}'
-          force-add: 'true'
+          email: ${{ github.actor }}@users.noreply.github.com
+          name: ${{ github.actor }}
+          commit_message: Set version to - ${{ steps.split.outputs.version }}
+          target_branch: ${{ github.ref_name }}
           files: pubspec.yaml version.yml ios/info.plist ios/project.pbxproj
-          name: GitHub Action
+          remote_repository: https://github.com/owner/another_repository
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
