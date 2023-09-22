@@ -32,7 +32,7 @@ jobs:
         id: branch
         with:
           text: ${{ steps.split.outputs.version }}
-          regex: '.'
+          regex: '\.'
           flags: gm
 
       - name: Overwrite file
@@ -44,9 +44,9 @@ jobs:
           write-mode: overwrite
           contents: |
             ---
-            major: ${{ steps.branch.outputs._group1 }}
-            minor: ${{ steps.branch.outputs._group2 }}
-            patch: ${{ steps.branch.outputs._group3 }}
+            major: ${{ steps.branch.outputs.group1 }}
+            minor: ${{ steps.branch.outputs.group2 }}
+            patch: ${{ steps.branch.outputs.group3 }}
 
       - name: Set version on Pubspec
         run: bundle exec fastlane apply_new_version
