@@ -9,7 +9,7 @@ on:
 jobs:
   # Android
   set_version:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     outputs:
       code: ${{ steps.buildNumber.outputs.code }}
       version: ${{ steps.split.outputs.version }}
