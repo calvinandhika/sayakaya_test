@@ -72,6 +72,6 @@ jobs:
           name: ${{ github.actor }}
           commit_message: Set version to - ${{ steps.split.outputs.version }}
           target_branch: ${{ github.ref_name }}
-          files: pubspec.yaml version.yml ios/Runner/info.plist ios/Runner.xcodeproj/project.pbxproj
+          files: pubspec.yaml version.yml ios/Runner/Info.plist ios/Runner.xcodeproj/project.pbxproj
           access_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
