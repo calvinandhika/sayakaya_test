@@ -32,8 +32,7 @@ jobs:
         id: branch
         with:
           text: ${{ steps.split.outputs.version }}
-          regex: '([0-9])'
-          flags: gm
+          regex: '(\d+)\.(\d+)\.(\d+)'
 
       - name: Overwrite file
         env:
