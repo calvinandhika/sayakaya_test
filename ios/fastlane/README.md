@@ -39,6 +39,14 @@ Applies the latest version
 
 Get build number
 
+### ios bump_build_number
+
+```sh
+[bundle exec] fastlane ios bump_build_number
+```
+
+Bumps build number
+
 ### ios get_pubspec_version_name
 
 ```sh

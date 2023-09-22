@@ -39,6 +39,13 @@ platform :ios do
       pubspec: "../pubspec.yaml")
   end
 
+  desc "Bumps build number"
+  lane :bump_build_number do |options|
+    increment_build_number(
+      build_number: options[:build_number]
+    )
+  end
+
   desc "Get build version name"
   lane :get_pubspec_version_name do
     flutter_version_manager(
